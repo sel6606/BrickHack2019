@@ -13,6 +13,7 @@ public class CatalogManager : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
+        OpenCatalog();
 	}
 	
 	// Update is called once per frame
@@ -36,5 +37,10 @@ public class CatalogManager : MonoBehaviour
                 panels[i].SetActive(false);
             }
         }
+    }
+
+    public void OpenCatalog()
+    {
+       StartCoroutine(Api.instance.PerformRequest());
     }
 }
