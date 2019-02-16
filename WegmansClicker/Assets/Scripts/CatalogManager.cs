@@ -7,8 +7,8 @@ public class CatalogManager : MonoBehaviour
 {
     public Button[] buttons;
     public GameObject[] panels;
-
-
+    public GameObject catalog;
+    public GameObject farm;
 
 	// Use this for initialization
 	void Start ()
@@ -36,5 +36,11 @@ public class CatalogManager : MonoBehaviour
                 panels[i].SetActive(false);
             }
         }
+    }
+
+    public void ChangeVisiblity()
+    {
+        farm.SetActive(catalog.activeSelf);
+        catalog.SetActive(!catalog.activeSelf);
     }
 }
