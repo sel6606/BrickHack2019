@@ -8,6 +8,7 @@ using System.IO.Compression;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Net;
+using System.Globalization;
 
 // Dairy, Produce, Meat, Grains
 // Name, Brand, Price
@@ -63,7 +64,7 @@ public class User
 
     public User(Person p)
     {
-        name = p.name.first.First().ToString().ToUpper() + p.name.last.Substring(1) + ' ' + p.last.first.First().ToString().ToUpper();
+        name = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(p.name.first) + ' ' + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(p.name.last);
         age = p.registered.age;
     }
 }
