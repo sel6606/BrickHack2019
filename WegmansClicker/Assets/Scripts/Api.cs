@@ -1,15 +1,27 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using System.Threading;
 
 // Dairy, Produce, Meat, Grains
 // Name, Brand, Price
 
+[Serializable]
+public class FoodItem
+{
+    public int sku;
+    public string name;
+    public string brand;
+    public float price;
+}
+
 public class Api : MonoBehaviour
 {
-
     public static Api instance;
+
+    public string currentResponseString; // TODO change how this is handled
 
     // TODO properly handle API key storage
     private const string API_KEY = "26f415a416f749bbb28fcf6d70c8818b";
@@ -33,24 +45,47 @@ public class Api : MonoBehaviour
         }
     }
 
-    public IEnumerator PerformRequest()
+    public string ProductRequest(string sku)
     {
-        Debug.Log("Hi");
-        UnityWebRequest www = UnityWebRequest.Get("https://api.wegmans.io/products/125194?api-version=2018-10-18&subscription-key=" + API_KEY);
-        yield return www.SendWebRequest();
+        string queryString = "https://api.wegmans.io/products/" + sku + "?api-version=2018-10-18&subscription-key=" + API_KEY;
+        string responseString = "";
+        PerformRequest(queryString, responseString);
+        CreateFoodFromJSON(currentResponseString);
+        return "";
+    }
 
-        if (www.isNetworkError || www.isHttpError)
+    public void PriceRequest(string sku, string storeId)
+    {
+        string queryString = "https://api.wegmans.io/products/" + sku + "?api-version=2018-10-18&subscription-key=" + API_KEY;
+        string responseString = "";
+        PerformRequest(queryString, responseString);
+        CreateFoodFromJSON(responseString);
+    }
+
+    public IEnumerator PerformRequest(string requestString, string responseString)
+    {
+        UnityWebRequest productRequest = UnityWebRequest.Get(requestString);
+        var temp = productRequest.SendWebRequest();
+        while(!temp.isDone);
+
+        if (productRequest.isNetworkError || productRequest.isHttpError)
         {
-            Debug.Log(www.error);
+            Debug.Log(productRequest.error);
         }
         else
         {
-            // Show results as text
-            Debug.Log(www.downloadHandler.text);
-
-            // Or retrieve results as binary data
-            byte[] results = www.downloadHandler.data;
+            currentResponseString = productRequest.downloadHandler.text;
+            
         }
+        return null;
     }
+
+    public FoodItem CreateFoodFromJSON(string jsonString)
+    {      
+        // Note, this will NOT have a price
+        return JsonUtility.FromJson<FoodItem>(jsonString); ;
+    }
+
+
 
 }
