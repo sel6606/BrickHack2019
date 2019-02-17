@@ -43,7 +43,7 @@ public class CatalogManager : MonoBehaviour
 
     public void OpenCatalog()
     {
-       StartCoroutine(Api.instance.PerformRequest());
+       StartCoroutine(Api.instance.ProductRequest("125194"));
     }
 
     public void ChangeVisiblity()
