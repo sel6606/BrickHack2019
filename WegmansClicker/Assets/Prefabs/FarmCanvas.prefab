@@ -80,7 +80,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1146764472794424
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,7 +135,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1199545583392298
 GameObject:
   m_ObjectHideFlags: 1
@@ -222,7 +222,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1560722549177548
 GameObject:
   m_ObjectHideFlags: 1
@@ -638,6 +638,7 @@ MonoBehaviour:
   itemValueText: {fileID: 114000861004276014}
   multipler: 0
   multiplerText: {fileID: 114133541636438880}
+  boughtSku: 
 --- !u!114 &114113250193578154
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -845,6 +846,7 @@ MonoBehaviour:
   itemValueText: {fileID: 114812585405957370}
   multipler: 0
   multiplerText: {fileID: 114020532543293354}
+  boughtSku: 
 --- !u!114 &114279278701595376
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -856,10 +858,10 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 800, y: 450}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -1029,6 +1031,7 @@ MonoBehaviour:
   itemValueText: {fileID: 114564702724588000}
   multipler: 0
   multiplerText: {fileID: 114690508863717496}
+  boughtSku: 
 --- !u!114 &114504727275258966
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1457,6 +1460,7 @@ MonoBehaviour:
   itemValueText: {fileID: 114762238291306988}
   multipler: 0
   multiplerText: {fileID: 114775796470605958}
+  boughtSku: 
 --- !u!114 &114957358442972878
 MonoBehaviour:
   m_ObjectHideFlags: 1

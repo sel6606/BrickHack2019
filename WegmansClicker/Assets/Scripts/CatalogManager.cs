@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class CatalogManager : MonoBehaviour
 {
     public Button[] buttons;
+    public bool[] unlocked;
     public GameObject[] panels;
     public GameObject catalog;
     public GameObject farm;
@@ -40,7 +41,10 @@ public class CatalogManager : MonoBehaviour
             }
             else
             {
-                buttons[i].interactable = true;
+                if (unlocked[i])
+                {
+                    buttons[i].interactable = true;
+                }
                 panels[i].SetActive(false);
             }
         }
@@ -107,12 +111,22 @@ public class CatalogManager : MonoBehaviour
 
                     currentRow.transform.GetChild(0).GetComponent<CatalogItem>().Food = currentFood[i];
                     currentRow.transform.GetChild(0).GetComponent<CatalogItem>().category = categories[tab];
+
+                    if(categories[tab].boughtSku.Contains(currentFood[i].sku))
+                    {
+                        currentRow.transform.GetChild(0).GetComponent<CatalogItem>().bought = true;
+                    }
                 }
                 else
                 {
                     currentRow.transform.GetChild(1).GetComponentInChildren<Text>().text = currentFood[i].name + "\n$" + currentFood[i].price;
                     currentRow.transform.GetChild(1).GetComponent<CatalogItem>().Food = currentFood[i];
                     currentRow.transform.GetChild(1).GetComponent<CatalogItem>().category = categories[tab];
+
+                    if (categories[tab].boughtSku.Contains(currentFood[i].sku))
+                    {
+                        currentRow.transform.GetChild(1).GetComponent<CatalogItem>().bought = true;
+                    }
                 }
             }
         }
