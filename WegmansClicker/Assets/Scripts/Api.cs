@@ -28,6 +28,8 @@ public class Api : MonoBehaviour
     // TODO properly handle API key storage
     private const string API_KEY = "26f415a416f749bbb28fcf6d70c8818b";
 
+    private string[] dairyItems = { "125194", "270092", "465346", "626008", "40032" };
+
     void Awake()
     {
         //If there is not already a GameInfo object, set it to this
@@ -49,7 +51,10 @@ public class Api : MonoBehaviour
     {
         // for each food call requestFoodItem ()
         List<FoodItem> foodItems = new List<FoodItem>();
-        foodItems.Add(RequestFoodItem("125194", "62"));
+        foreach (string s in dairyItems)
+        {
+            foodItems.Add(RequestFoodItem(s, "62"));
+        }        
         var test = foodItems;
         return null;
     }
@@ -57,7 +62,7 @@ public class Api : MonoBehaviour
     public FoodItem RequestFoodItem(string sku, string storeId)
     {
         FoodItem food = CreateFoodFromJSON(ProductRequest(sku));
-        //string priceResponseString = await PriceRequest(sku, storeId);
+        //string priceResponseString = PriceRequest(sku, storeId);
         //AddPriceToFood(ref food, priceResponseString);
         return food;
     }
@@ -65,16 +70,16 @@ public class Api : MonoBehaviour
     public string ProductRequest(string sku)
     {
         string queryString = "https://api.wegmans.io/products/" + sku + "?api-version=2018-10-18&subscription-key=" + API_KEY;
-        return PerformRequest(queryString).Result;
+        return PerformRequest(queryString);
     }
 
     public string PriceRequest(string sku, string storeId)
     {
         string queryString = "https://api.wegmans.io/products/" + sku + "/prices/" + storeId + "?api-version=2018-10-18&subscription-key=" + API_KEY;
-        return PerformRequest(queryString).Result;
+        return PerformRequest(queryString);
     }
 
-    public async Task<string> PerformRequest(string requestString)
+    public string PerformRequest(string requestString)
     {
         // Create a New HttpClient object and dispose it when done, so the app doesn't leak resources
         using (HttpClient client = new HttpClient())
@@ -82,11 +87,12 @@ public class Api : MonoBehaviour
             // Call asynchronous network methods in a try/catch block to handle exceptions
             try
             {
-                HttpResponseMessage response = await client.GetAsync(requestString);
+                HttpResponseMessage response = client.GetAsync(requestString).Result;
                 response.EnsureSuccessStatusCode();
-                string responseBody = await response.Content.ReadAsStringAsync();
+                string responseBody = response.Content.ReadAsStringAsync().Result;
                 // Above three lines can be replaced with new helper method below
                 // string responseBody = await client.GetStringAsync(uri);
+            
                 return responseBody;
                 //Console.WriteLine(responseBody);
             }
