@@ -60,12 +60,12 @@ public class PersonRegistered
 public class User
 {
     public string name;
-    public int age;
+    public int workExperience;
 
     public User(Person p)
     {
         name = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(p.name.first) + ' ' + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(p.name.last);
-        age = p.registered.age;
+        workExperience = p.registered.age;
     }
 }
 
@@ -84,7 +84,7 @@ public class Api : MonoBehaviour
     private string[] bakeryItems = { "10193", "24011", "26114", "29391", "29880", "30360", "42044", "42374", "44072", "46082" };
 
     public List<FoodItem> foodItems;
-    public List<Person> cashiers;
+    public List<User> cashiers;
 
     void Awake()
     {
@@ -103,12 +103,17 @@ public class Api : MonoBehaviour
         }
     }
 
-    public IEnumerator GetCashiers()
+    public IEnumerator GetCashiers(int numCashiers)
     {
-        string queryString = "https://randomuser.me/api/?inc=name,registered&results=5";
+        string queryString = "https://randomuser.me/api/?inc=name,registered&results=" + numCashiers;
         string response = PerformRequest(queryString);
         RandomUsersResponse res = JsonUtility.FromJson<RandomUsersResponse>(response);
-        cashiers = res.results;
+        List<Person> people = res.results;
+        cashiers = new List<User>();
+        foreach (Person p in people)
+        {
+            cashiers.Add(new User(p));
+        }
         yield return res.results; // unused
     }
     
