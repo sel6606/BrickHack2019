@@ -10,11 +10,12 @@ public class CatalogManager : MonoBehaviour
     public GameObject catalog;
     public GameObject farm;
     public GameObject rowPrefab;
+    public ItemInfo[] categories;
 
     public int debugButtons;
 
 
-    private List<FoodItem> currentFood;
+    public List<FoodItem> currentFood;
 
 	// Use this for initialization
 	void Start ()
@@ -100,11 +101,22 @@ public class CatalogManager : MonoBehaviour
                 currentRow = Instantiate(rowPrefab, panels[tab].transform.GetChild(0));
                 currentRow.transform.localPosition = new Vector3(currentRow.transform.localPosition.x, currentRow.transform.localPosition.y - (100 * i), currentRow.transform.localPosition.z);
 
-                currentRow.transform.GetChild(0).GetComponentInChildren<Text>().text = currentFood[i].name;
+                currentRow.transform.GetChild(0).GetComponentInChildren<Text>().text = currentFood[i].name + "\n$" + currentFood[i].price;
+
+                currentRow.transform.GetChild(0).gameObject.AddComponent<CatalogItem>();
+                currentRow.transform.GetChild(0).GetComponent<CatalogItem>().Food = currentFood[i];
+                currentRow.transform.GetChild(0).GetComponent<CatalogItem>().category = categories[tab];
+
+                currentRow.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(delegate { currentRow.transform.GetChild(0).GetComponent<CatalogItem>().MakePurchase(); });
             }
             else
             {
-                currentRow.transform.GetChild(1).GetComponentInChildren<Text>().text = currentFood[i].name;
+                currentRow.transform.GetChild(1).GetComponentInChildren<Text>().text = currentFood[i].name + "\n$" + currentFood[i].price;
+                currentRow.transform.GetChild(1).gameObject.AddComponent<CatalogItem>();
+                currentRow.transform.GetChild(1).GetComponent<CatalogItem>().Food = currentFood[i];
+                currentRow.transform.GetChild(1).GetComponent<CatalogItem>().category = categories[tab];
+
+                currentRow.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(delegate { currentRow.transform.GetChild(1).GetComponent<CatalogItem>().MakePurchase(); });
             }
         }
     }
