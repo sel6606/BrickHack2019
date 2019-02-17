@@ -7,6 +7,8 @@ public class CatalogItem : MonoBehaviour
 {
     public ItemInfo category;
     public float rdValue;
+    public CatalogManager catMan;
+    public int categoryInt;
 
     private FoodItem food;
     public bool bought;
@@ -80,8 +82,18 @@ public class CatalogItem : MonoBehaviour
             tab.interactable = true;
             category.referenceMoneyBag.GetComponent<BankManager>().moneyBag -= rdValue;
             bought = true;
+            catMan.unlocked[categoryInt] = true;
         }
     }
+
+    public void MakeCategoryVisible(GameObject categoryInScene)
+    {
+        if(bought)
+        {
+            categoryInScene.SetActive(true);
+        }
+    }
+
 
     public void PurchaseExtra()
     {
