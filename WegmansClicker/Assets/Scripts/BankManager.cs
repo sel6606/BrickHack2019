@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,7 @@ public class BankManager : MonoBehaviour {
     public void IncreaseMoney(float valueOfItem)
     {
         moneyBag+= valueOfItem;
+        moneyBag = (float)(Math.Round(moneyBag, 2));
     }
 
     // Use this for initialization
@@ -21,6 +23,6 @@ public class BankManager : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        moneyBagText.text = "$" + moneyBag.ToString();
+        moneyBagText.text = "$" + String.Format("{0:0.00}", moneyBag);
     }
 }
