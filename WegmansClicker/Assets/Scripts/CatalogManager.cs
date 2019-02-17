@@ -55,7 +55,6 @@ public class CatalogManager : MonoBehaviour
             GameObject temp = Instantiate(rowPrefab, panels[tab].transform.GetChild(0));
             temp.transform.localPosition = new Vector3(temp.transform.localPosition.x, temp.transform.localPosition.y - (100 * i), temp.transform.localPosition.z);
         }
-        }
     }
 
     public void OpenCatalog()
