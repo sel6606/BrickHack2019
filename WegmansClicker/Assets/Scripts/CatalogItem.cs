@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +16,7 @@ public class CatalogItem : MonoBehaviour
 
     public float Value
     {
-        get { return food.price; }
+        get { return (float)(Math.Round(food.price, 2)); }
     }
 
     public int SKU
@@ -49,10 +50,10 @@ public class CatalogItem : MonoBehaviour
 
     public void MakePurchase()
     {
-        if(category.referenceMoneyBag.GetComponent<BankManager>().moneyBag >= food.price)
+        if(category.referenceMoneyBag.GetComponent<BankManager>().moneyBag >= Value)
         {
-            category.increaseValue(food.price);
-            category.referenceMoneyBag.GetComponent<BankManager>().moneyBag -= food.price;
+            category.increaseValue(Value);
+            category.referenceMoneyBag.GetComponent<BankManager>().moneyBag -= Value;
             bought = true;
             category.boughtSku.Add(SKU);
         }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +16,7 @@ public class ItemInfo : MonoBehaviour
 
     public void IncreaseMoney()
     {
-        referenceMoneyBag.GetComponent<BankManager>().IncreaseMoney(itemValue * multipler);
+        referenceMoneyBag.GetComponent<BankManager>().IncreaseMoney((float)(Math.Round(itemValue * multipler, 2)));
     }
 
     public float CurrentValue()
