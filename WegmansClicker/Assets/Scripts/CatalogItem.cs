@@ -11,6 +11,7 @@ public class CatalogItem : MonoBehaviour
     public float rdValue;
     public CatalogManager catMan;
     public int categoryInt;
+    public bool increasing;
 
     private FoodItem food;
     public bool bought;
@@ -43,11 +44,23 @@ public class CatalogItem : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
 		if(gameObject.GetComponent<Button>().interactable && bought)
         {
             gameObject.GetComponent<Button>().interactable = false;
         }
-	}
+
+        if (gameObject.activeSelf && increasing)
+        {
+            string currentText = gameObject.GetComponentInChildren<Text>().text;
+            currentText = currentText.Substring(0, currentText.IndexOf("\n")) + "\n$" + rdValue;
+
+            gameObject.GetComponentInChildren<Text>().text = currentText;
+        }
+    }
 
     public void MakePurchase()
     {

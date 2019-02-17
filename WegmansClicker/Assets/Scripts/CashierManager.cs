@@ -42,13 +42,15 @@ public class CashierManager : MonoBehaviour {
             timeAmount = Mathf.Clamp(timeAmount * (2f/3f), 1.0f, float.MaxValue);
         }
 
+        timer = timeAmount;
+
     }
 
     void Automate()
     {
         // unsure why starting the game makes the player get paid
-        if (pay == 1)
-            return;
+        //if (pay == 1)
+            //return;
 
         float value = dairyObject.GetComponent<ItemInfo>().CurrentValue() +
             produceObject.GetComponent<ItemInfo>().CurrentValue() +
