@@ -7,6 +7,8 @@ public class CatalogManager : MonoBehaviour
 {
     public Button[] buttons;
     public GameObject[] panels;
+    public GameObject catalog;
+    public GameObject farm;
     public GameObject rowPrefab;
 
     public int debugButtons;
@@ -14,6 +16,7 @@ public class CatalogManager : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
+        OpenCatalog();
 	}
 	
 	// Update is called once per frame
@@ -52,5 +55,17 @@ public class CatalogManager : MonoBehaviour
             GameObject temp = Instantiate(rowPrefab, panels[tab].transform.GetChild(0));
             temp.transform.localPosition = new Vector3(temp.transform.localPosition.x, temp.transform.localPosition.y - (100 * i), temp.transform.localPosition.z);
         }
+        }
+    }
+
+    public void OpenCatalog()
+    {
+       //StartCoroutine(Api.instance.ProductRequest("125194"));
+    }
+
+    public void ChangeVisiblity()
+    {
+        farm.SetActive(catalog.activeSelf);
+        catalog.SetActive(!catalog.activeSelf);
     }
 }
