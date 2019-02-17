@@ -13,6 +13,9 @@ public class CatalogManager : MonoBehaviour
 
     public int debugButtons;
 
+
+    private List<FoodItem> currentFood;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -57,9 +60,60 @@ public class CatalogManager : MonoBehaviour
         }
     }
 
+    public void InitButtonsDebug(int tab)
+    {
+        switch(tab)
+        {
+            case 0:
+                StartCoroutine(Api.instance.GetDairyFoodItems());
+                break;
+            case 1:
+                return;
+                break;
+            case 2:
+                return;
+                break;
+            case 3:
+                return;
+                break;
+            case 4:
+                return;
+                break;
+            default:
+                return;
+                break;
+        }
+
+        currentFood = Api.instance.foodItems;
+
+        foreach (Transform child in panels[tab].transform.GetChild(0))
+        {
+            Destroy(child.gameObject);
+        }
+        int numRows = currentFood.Count / 2;
+
+        GameObject currentRow = null;
+        for (int i = 0; i < currentFood.Count; i++)
+        {
+            if (i % 2 == 0)
+            {
+                currentRow = Instantiate(rowPrefab, panels[tab].transform.GetChild(0));
+                currentRow.transform.localPosition = new Vector3(currentRow.transform.localPosition.x, currentRow.transform.localPosition.y - (100 * i), currentRow.transform.localPosition.z);
+
+                currentRow.transform.GetChild(0).GetComponentInChildren<Text>().text = currentFood[i].name;
+            }
+            else
+            {
+                currentRow.transform.GetChild(1).GetComponentInChildren<Text>().text = currentFood[i].name;
+            }
+        }
+    }
+
     public void OpenCatalog()
     {
-       StartCoroutine(Api.instance.GetDairyFoodItems());
+        StartCoroutine(Api.instance.GetDairyFoodItems());
+        currentFood = Api.instance.foodItems;
+        InitButtonsDebug(0);
     }
 
     public void ChangeVisiblity()

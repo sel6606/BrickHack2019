@@ -30,6 +30,8 @@ public class Api : MonoBehaviour
 
     private string[] dairyItems = { "125194", "270092", "465346", "626008", "40032" };
 
+    public List<FoodItem> foodItems;
+
     void Awake()
     {
         //If there is not already a GameInfo object, set it to this
@@ -50,13 +52,13 @@ public class Api : MonoBehaviour
     public IEnumerator GetDairyFoodItems()
     {
         // for each food call requestFoodItem ()
-        List<FoodItem> foodItems = new List<FoodItem>();
+        foodItems = new List<FoodItem>();
         foreach (string s in dairyItems)
         {
             foodItems.Add(RequestFoodItem(s, "62"));
         }        
         var test = foodItems;
-        return null;
+        yield return null;
     }
     
     public FoodItem RequestFoodItem(string sku, string storeId)
