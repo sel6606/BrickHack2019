@@ -28,6 +28,34 @@ public class TradeIdentifier
     public List<string> images;
 }
 
+[Serializable]
+public class RandomUsersResponse
+{
+    public List<Person> results;
+}
+
+[Serializable]
+public class Person
+{
+    public PersonName name;
+    public PersonRegistered registered;
+}
+
+[Serializable]
+public class PersonName
+{
+    public string title;
+    public string first;
+    public string last;
+}
+
+[Serializable]
+public class PersonRegistered
+{
+    public string date;
+    public int age;
+}
+
 public class Api : MonoBehaviour
 {
     public static Api instance;
@@ -43,6 +71,7 @@ public class Api : MonoBehaviour
     private string[] bakeryItems = { "10193", "24011", "26114", "29391", "29880", "30360", "42044", "42374", "44072", "46082" };
 
     public List<FoodItem> foodItems;
+    public List<Person> cashiers;
 
     void Awake()
     {
@@ -60,6 +89,16 @@ public class Api : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public IEnumerator GetCashiers()
+    {
+        string queryString = "https://randomuser.me/api/?inc=name,registered&results=5";
+        string response = PerformRequest(queryString);
+        RandomUsersResponse res = JsonUtility.FromJson<RandomUsersResponse>(response);
+        cashiers = res.results;
+        yield return res.results; // unused
+    }
+    
 
     public IEnumerable GetHardFoodItems(string[] hardItems)
     {
