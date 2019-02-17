@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class BankManager : MonoBehaviour {
-    public int moneyBag;
+    public float moneyBag;
     public Text moneyBagText;
 
-    public void IncreaseMoney(int valueOfItem)
+    public void IncreaseMoney(float valueOfItem)
     {
         moneyBag+= valueOfItem;
     }
@@ -21,6 +21,6 @@ public class BankManager : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        moneyBagText.text = moneyBag.ToString();
+        moneyBagText.text = "$" + moneyBag.ToString();
     }
 }

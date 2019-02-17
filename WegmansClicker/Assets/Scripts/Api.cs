@@ -42,6 +42,8 @@ public class Api : MonoBehaviour
     private string[] produceItems = { "5595", "14524", "14559", "15057", "92576", "92844", "92942", "173303", "50335", "14721" };
     private string[] bakeryItems = { "10193", "23853", "24011", "26114", "29391", "29880", "30360", "33122", "33542", "33125" };
 
+    public List<FoodItem> foodItems;
+
     void Awake()
     {
         //If there is not already a GameInfo object, set it to this
@@ -61,7 +63,7 @@ public class Api : MonoBehaviour
 
     public IEnumerable GetHardFoodItems(string[] hardItems)
     {
-        List<FoodItem> foodItems = new List<FoodItem>();
+        foodItems = new List<FoodItem>();
         foreach (string s in hardItems)
         {
             foodItems.Add(RequestFoodItem(s, "62"));
@@ -71,11 +73,11 @@ public class Api : MonoBehaviour
 
     public IEnumerator GetDairyFoodItems()
     {
-        List<FoodItem> foodItems = new List<FoodItem>();
+        foodItems = new List<FoodItem>();
         foreach (string s in dairyItems)
         {
             foodItems.Add(RequestFoodItem(s, "62"));
-        }        
+        }
         yield return foodItems;
     }
 
