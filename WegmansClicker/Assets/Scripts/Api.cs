@@ -7,6 +7,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Net;
 
 // Dairy, Produce, Meat, Grains
 // Name, Brand, Price
@@ -28,7 +29,7 @@ public class Api : MonoBehaviour
     // TODO properly handle API key storage
     private const string API_KEY = "26f415a416f749bbb28fcf6d70c8818b";
 
-    private string[] dairyItems = { "125194", "270092", "465346", "626008", "40032" };
+    private string[] dairyItems = { "125194", "270092", "465346", "40033", "40032" };
 
     public List<FoodItem> foodItems;
 
@@ -64,8 +65,8 @@ public class Api : MonoBehaviour
     public FoodItem RequestFoodItem(string sku, string storeId)
     {
         FoodItem food = CreateFoodFromJSON(ProductRequest(sku));
-        //string priceResponseString = PriceRequest(sku, storeId);
-        //AddPriceToFood(ref food, priceResponseString);
+        string priceResponseString = PriceRequest(sku, storeId);
+        AddPriceToFood(ref food, priceResponseString);
         return food;
     }
 
@@ -94,7 +95,7 @@ public class Api : MonoBehaviour
                 string responseBody = response.Content.ReadAsStringAsync().Result;
                 // Above three lines can be replaced with new helper method below
                 // string responseBody = await client.GetStringAsync(uri);
-            
+
                 return responseBody;
                 //Console.WriteLine(responseBody);
             }
@@ -115,7 +116,8 @@ public class Api : MonoBehaviour
 
     public FoodItem AddPriceToFood(ref FoodItem food, string priceResponseString)
     {
-        FoodItem test = JsonUtility.FromJson<FoodItem>(priceResponseString);
-        return null;
+        FoodItem has_price = JsonUtility.FromJson<FoodItem>(priceResponseString);
+        food.price = has_price.price;
+        return has_price; // unused rn
     }
 }
