@@ -56,6 +56,18 @@ public class PersonRegistered
     public int age;
 }
 
+public class User
+{
+    public string name;
+    public int age;
+
+    public User(Person p)
+    {
+        name = p.name.first.First().ToString().ToUpper() + p.name.last.Substring(1) + ' ' + p.last.first.First().ToString().ToUpper();
+        age = p.registered.age;
+    }
+}
+
 public class Api : MonoBehaviour
 {
     public static Api instance;
