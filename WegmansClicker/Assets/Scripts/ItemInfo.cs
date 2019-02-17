@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ItemInfo : MonoBehaviour {
     public GameObject referenceMoneyBag;
-    public int itemValue;
+    public float itemValue;
+    public Text itemValueText;
 
     public void IncreaseMoney()
     {
@@ -17,13 +19,13 @@ public class ItemInfo : MonoBehaviour {
 
     }
    
-    public void increaseValue(int additionalValue)
+    public void increaseValue(float additionalValue)
     {
         itemValue += additionalValue;
     }
 
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        itemValueText.text = "Value: $" + itemValue.ToString();
+    }
 }
