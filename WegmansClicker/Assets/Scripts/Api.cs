@@ -2,8 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 using System.Threading;
+using System.IO;
+using System.IO.Compression;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 // Dairy, Produce, Meat, Grains
 // Name, Brand, Price
@@ -20,13 +23,12 @@ public class FoodItem
 public class Api : MonoBehaviour
 {
     public static Api instance;
-
-    public string currentResponseString; // TODO change how this is handled
+ 
 
     // TODO properly handle API key storage
     private const string API_KEY = "26f415a416f749bbb28fcf6d70c8818b";
 
-
+    private string[] dairyItems = { "125194", "270092", "465346", "626008", "40032" };
 
     void Awake()
     {
@@ -45,47 +47,73 @@ public class Api : MonoBehaviour
         }
     }
 
+    public IEnumerator GetDairyFoodItems()
+    {
+        // for each food call requestFoodItem ()
+        List<FoodItem> foodItems = new List<FoodItem>();
+        foreach (string s in dairyItems)
+        {
+            foodItems.Add(RequestFoodItem(s, "62"));
+        }        
+        var test = foodItems;
+        return null;
+    }
+    
+    public FoodItem RequestFoodItem(string sku, string storeId)
+    {
+        FoodItem food = CreateFoodFromJSON(ProductRequest(sku));
+        //string priceResponseString = PriceRequest(sku, storeId);
+        //AddPriceToFood(ref food, priceResponseString);
+        return food;
+    }
+
     public string ProductRequest(string sku)
     {
         string queryString = "https://api.wegmans.io/products/" + sku + "?api-version=2018-10-18&subscription-key=" + API_KEY;
-        string responseString = "";
-        PerformRequest(queryString, responseString);
-        CreateFoodFromJSON(currentResponseString);
-        return "";
+        return PerformRequest(queryString);
     }
 
-    public void PriceRequest(string sku, string storeId)
+    public string PriceRequest(string sku, string storeId)
     {
-        string queryString = "https://api.wegmans.io/products/" + sku + "?api-version=2018-10-18&subscription-key=" + API_KEY;
-        string responseString = "";
-        PerformRequest(queryString, responseString);
-        CreateFoodFromJSON(responseString);
+        string queryString = "https://api.wegmans.io/products/" + sku + "/prices/" + storeId + "?api-version=2018-10-18&subscription-key=" + API_KEY;
+        return PerformRequest(queryString);
     }
 
-    public IEnumerator PerformRequest(string requestString, string responseString)
+    public string PerformRequest(string requestString)
     {
-        UnityWebRequest productRequest = UnityWebRequest.Get(requestString);
-        var temp = productRequest.SendWebRequest();
-        while(!temp.isDone);
-
-        if (productRequest.isNetworkError || productRequest.isHttpError)
+        // Create a New HttpClient object and dispose it when done, so the app doesn't leak resources
+        using (HttpClient client = new HttpClient())
         {
-            Debug.Log(productRequest.error);
-        }
-        else
-        {
-            currentResponseString = productRequest.downloadHandler.text;
+            // Call asynchronous network methods in a try/catch block to handle exceptions
+            try
+            {
+                HttpResponseMessage response = client.GetAsync(requestString).Result;
+                response.EnsureSuccessStatusCode();
+                string responseBody = response.Content.ReadAsStringAsync().Result;
+                // Above three lines can be replaced with new helper method below
+                // string responseBody = await client.GetStringAsync(uri);
             
+                return responseBody;
+                //Console.WriteLine(responseBody);
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine("\nException Caught!");
+                Console.WriteLine("Message :{0} ", e.Message);
+            }
         }
-        return null;
+        return "";
     }
 
     public FoodItem CreateFoodFromJSON(string jsonString)
     {      
         // Note, this will NOT have a price
-        return JsonUtility.FromJson<FoodItem>(jsonString); ;
+        return JsonUtility.FromJson<FoodItem>(jsonString);
     }
 
-
-
+    public FoodItem AddPriceToFood(ref FoodItem food, string priceResponseString)
+    {
+        FoodItem test = JsonUtility.FromJson<FoodItem>(priceResponseString);
+        return null;
+    }
 }
