@@ -7,7 +7,6 @@ using System.IO;
 using System.IO.Compression;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Net;
 
 // Dairy, Produce, Meat, Grains
 // Name, Brand, Price
@@ -19,6 +18,13 @@ public class FoodItem
     public string name;
     public string brand;
     public float price;
+    public List<TradeIdentifiers> tradeIdentifiers;
+}
+
+[Serializable]
+public class TradeIdentifiers
+{
+    public List<string> images;
 }
 
 public class Api : MonoBehaviour
@@ -107,7 +113,7 @@ public class Api : MonoBehaviour
     }
 
     public FoodItem CreateFoodFromJSON(string jsonString)
-    {      
+    {
         // Note, this will NOT have a price
         return JsonUtility.FromJson<FoodItem>(jsonString);
     }
