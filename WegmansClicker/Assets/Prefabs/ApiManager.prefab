@@ -51,4 +51,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e214a99a90c285c458fb65afb07096a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentResponseString: 
+  foodItems: []
