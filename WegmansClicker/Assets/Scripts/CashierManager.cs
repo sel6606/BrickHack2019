@@ -39,7 +39,7 @@ public class CashierManager : MonoBehaviour {
         }
         else
         {
-            timeAmount *= (2f/3f);
+            timeAmount = Mathf.Clamp(timeAmount * (2f/3f), 1.0f, float.MaxValue);
         }
 
     }
