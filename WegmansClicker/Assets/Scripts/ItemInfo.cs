@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemInfo : MonoBehaviour {
+public class ItemInfo : MonoBehaviour
+{
     public GameObject referenceMoneyBag;
     
     public float itemValue;
     public Text itemValueText;
     public int multipler;
     public Text multiplerText;
+    public List<int> boughtSku;
 
     public void IncreaseMoney()
     {
@@ -24,6 +26,7 @@ public class ItemInfo : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        boughtSku = new List<int>();
         multipler = 1;
     }
    
