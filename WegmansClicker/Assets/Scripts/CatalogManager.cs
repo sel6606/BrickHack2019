@@ -75,13 +75,13 @@ public class CatalogManager : MonoBehaviour
                     StartCoroutine(Api.instance.GetDairyFoodItems());
                     break;
                 case 1:
-                    return;
+                    StartCoroutine(Api.instance.GetMeatFoodItems());
                     break;
                 case 2:
-                    return;
+                    StartCoroutine(Api.instance.GetProduceFoodItems());
                     break;
                 case 3:
-                    return;
+                    StartCoroutine(Api.instance.GetBakeryFoodItems());
                     break;
                 case 4:
                     return;
