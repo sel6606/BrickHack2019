@@ -63,3 +63,5 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  rowPrefab: {fileID: 1043882633237800, guid: 21f590a4316b3cc4b9284991ff72730a, type: 2}
+  debugButtons: 15
