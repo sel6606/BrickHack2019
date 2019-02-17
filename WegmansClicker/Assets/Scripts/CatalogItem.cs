@@ -43,6 +43,6 @@ public class CatalogItem : MonoBehaviour
 
     public void MakePurchase()
     {
-        category.increaseValue((int)food.price);
+        category.increaseValue(food.price);
     }
 }
