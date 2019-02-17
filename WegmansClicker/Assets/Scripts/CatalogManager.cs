@@ -12,16 +12,24 @@ public class CatalogManager : MonoBehaviour
     public GameObject farm;
     public GameObject rowPrefab;
     public ItemInfo[] categories;
+    public Text[] namedThings;
 
     public int debugButtons;
 
 
     public List<FoodItem> currentFood;
 
+    private List<string> employeeText;
+
 	// Use this for initialization
 	void Start ()
     {
+        employeeText = new List<string>();
         //OpenCatalog();
+        foreach(Text t in namedThings)
+        {
+            employeeText.Add(t.text);
+        }
 	}
 	
 	// Update is called once per frame
@@ -84,8 +92,18 @@ public class CatalogManager : MonoBehaviour
                     StartCoroutine(Api.instance.GetBakeryFoodItems());
                     break;
                 case 4:
+                    StartCoroutine(Api.instance.GetCashiers(namedThings.Length));
+                    List<User> names = Api.instance.cashiers;
+
+                    for (int i = 0; i < namedThings.Length; i++)
+                    {
+                        string temp = employeeText[i];
+
+                        
+
+                        namedThings[i].text = temp.Replace("$n", names[i].name);
+                    }
                     return;
-                    break;
                 default:
                     return;
                     break;

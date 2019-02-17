@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DairyCowBeginnings.unity
     guid: 7bb279951289fde4184fd5749118c81e
+  - enabled: 1
+    path: Assets/Scenes/WinScene.unity
+    guid: 42709142c4d99fd478cea20de0de9295
   m_configObjects: {}

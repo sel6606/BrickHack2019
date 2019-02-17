@@ -62,7 +62,7 @@ public class CashierManager : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         cashierText.text = cashierAmount.ToString() +
-            " Cashier(s)\n. Time to earn money: " + timeAmount.ToString() + " second(s)";
+            " Cashier(s)\nTime to earn money: " + timeAmount.ToString() + " second(s)";
 
         if (timeAmount != 0 && cashierAmount > 0)
         {

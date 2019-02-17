@@ -44,6 +44,6 @@ public class ItemInfo : MonoBehaviour
 	// Update is called once per frame
 	void Update () {
         itemValueText.text = "Value: $" + itemValue.ToString();
-        multiplerText.text = "Multipler: " + multipler.ToString();
+        multiplerText.text = "Multiplier: " + multipler.ToString();
     }
 }

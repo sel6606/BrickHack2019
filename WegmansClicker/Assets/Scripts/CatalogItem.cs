@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CatalogItem : MonoBehaviour
 {
@@ -117,6 +118,14 @@ public class CatalogItem : MonoBehaviour
             currentText = currentText.Substring(0, currentText.IndexOf("\n")) + "\n$" + rdValue;
 
             gameObject.GetComponentInChildren<Text>().text = currentText;
+        }
+    }
+
+    public void Win()
+    {
+        if(bought)
+        {
+            SceneManager.LoadScene("WinScene");
         }
     }
 }
